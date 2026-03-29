@@ -16,7 +16,7 @@ function SectionDivider() {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-dark-900 relative">
+    <div className="min-h-screen bg-dark-900 relative overflow-x-hidden w-full">
       <div className="fixed inset-0 pointer-events-none opacity-[0.015]" style={{
         backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
         backgroundSize: "40px 40px"

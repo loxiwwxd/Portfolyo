@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { navLinks } from "../data"
@@ -7,7 +7,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("hero")
-  const touchedRef = useRef(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,60 +30,32 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navigateTo = useCallback((href) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
+  const scrollTo = (href) => {
     setIsOpen(false)
     setActiveSection(href.replace("#", ""))
-    const el = document.querySelector(href)
-    if (el) {
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: "smooth" })
-      }, 100)
-    }
-  }, [])
-
-  const handleLinkClick = useCallback((e, href) => {
-    e.preventDefault()
-    if (touchedRef.current) {
-      touchedRef.current = false
-      return
-    }
-    navigateTo(href)
-  }, [navigateTo])
-
-  const handleLinkTouch = useCallback((e, href) => {
-    e.preventDefault()
-    touchedRef.current = true
-    navigateTo(href)
-  }, [navigateTo])
-
-  const toggleMenu = useCallback(() => {
-    setIsOpen((prev) => !prev)
-  }, [])
-
-  const handleToggleClick = useCallback((e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (touchedRef.current) {
-      touchedRef.current = false
-      return
-    }
-    toggleMenu()
-  }, [toggleMenu])
-
-  const handleToggleTouch = useCallback((e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    touchedRef.current = true
-    toggleMenu()
-  }, [toggleMenu])
-
-  const touchStyle = { touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }
+    setTimeout(() => {
+      const el = document.querySelector(href)
+      if (el) el.scrollIntoView({ behavior: "smooth" })
+    }, 150)
+  }
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      style={{ touchAction: "manipulation" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? "bg-dark-900/80 backdrop-blur-xl shadow-lg shadow-black/30"
@@ -92,26 +63,29 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <motion.a
+        <a
           href="#hero"
-          onClick={(e) => handleLinkClick(e, "#hero")}
-          onTouchEnd={(e) => handleLinkTouch(e, "#hero")}
-          className="text-xl font-bold tracking-tight cursor-pointer select-none"
-          style={touchStyle}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          onClick={(e) => {
+            e.preventDefault()
+            scrollTo("#hero")
+          }}
+          className="text-xl font-bold tracking-tight select-none"
+          style={{ touchAction: "manipulation" }}
         >
           <span className="text-accent-500">{"<"}</span>
           <span className="text-white">Kerem</span>
           <span className="text-accent-500">{" />"}</span>
-        </motion.a>
+        </a>
 
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollTo(link.href)
+              }}
               className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
                 activeSection === link.href.replace("#", "")
                   ? "text-accent-500"
@@ -132,10 +106,9 @@ export default function Navbar() {
 
         <button
           type="button"
-          onClick={handleToggleClick}
-          onTouchEnd={handleToggleTouch}
-          className="md:hidden text-gray-400 hover:text-white transition-colors p-3 -mr-2 cursor-pointer select-none"
-          style={touchStyle}
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-gray-400 hover:text-white transition-colors p-3 -mr-2 select-none relative z-50"
+          style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
           aria-label="Menü"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -145,27 +118,30 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-dark-800/95 backdrop-blur-xl border-t border-white/5 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden fixed inset-0 top-0 left-0 w-full h-full bg-dark-900/95 backdrop-blur-xl z-40 overflow-hidden"
+            style={{ touchAction: "manipulation" }}
           >
-            <div className="px-6 py-4 flex flex-col gap-2">
+            <div className="flex flex-col items-center justify-center h-full gap-6 px-8">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  onTouchEnd={(e) => handleLinkTouch(e, link.href)}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  style={touchStyle}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer select-none ${
+                  onClick={(e) => {
+                    e.preventDefault()
+                    scrollTo(link.href)
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.08 }}
+                  style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
+                  className={`text-2xl font-semibold py-3 px-6 rounded-xl select-none transition-colors duration-300 ${
                     activeSection === link.href.replace("#", "")
                       ? "text-accent-500 bg-accent-400/10"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                      : "text-gray-300 active:text-accent-500 active:bg-accent-400/5"
                   }`}
                 >
                   {link.label}
@@ -178,4 +154,3 @@ export default function Navbar() {
     </motion.nav>
   )
 }
-

@@ -7,10 +7,10 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-400/8 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-electric-400/6 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-400/3 rounded-full blur-[120px]" />
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 bg-accent-400/8 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 md:w-80 h-48 md:h-80 bg-electric-400/6 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-accent-400/3 rounded-full blur-[120px]" />
       </div>
 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-dark-900)_70%)]" />
@@ -62,6 +62,7 @@ export default function Hero() {
               document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })
             }}
             className="group relative px-8 py-4 bg-accent-400 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-accent-400/25 hover:scale-105 active:scale-95"
+            style={{ touchAction: "manipulation" }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-accent-400 to-accent-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">Projelerimi Gör</span>
@@ -73,6 +74,7 @@ export default function Hero() {
               document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
             }}
             className="px-8 py-4 border border-white/10 text-gray-300 font-semibold rounded-xl hover:border-accent-400/30 hover:text-white hover:bg-white/5 transition-all duration-300 hover:scale-105 active:scale-95"
+            style={{ touchAction: "manipulation" }}
           >
             İletişime Geç
           </a>
