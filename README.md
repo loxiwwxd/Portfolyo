@@ -1,4 +1,4 @@
-# 🚀 Portfolyo Web Sitesi
+#  Portfolyo Web Sitesi
 
 Modern, minimalist ve yüksek performanslı kişisel portfolyo sitesi.
 
