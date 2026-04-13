@@ -34,7 +34,7 @@ export const projects = [
     title: "Portfolyo Web Sitesi",
     description: "React ve Tailwind CSS ile geliştirilmiş, Framer Motion animasyonları içeren modern ve minimalist kişisel portfolyo sitesi.",
     tags: ["React", "Tailwind CSS", "Framer Motion", "Vite"],
-    github: "https://github.com/",
+    github: "https://github.com/loxiwwxd/Portfolyo",
     live: "#",
   },
 ]
