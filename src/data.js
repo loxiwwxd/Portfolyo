@@ -24,13 +24,6 @@ export const skills = [
 
 export const projects = [
   {
-    title: "CeviriApp",
-    description: "İngilizce-Türkçe çeviri ve kelime testi uygulaması. Kullanıcılar kelime çevirisi yapabilir ve öğrendikleri kelimeleri test modunda pekiştirebilir.",
-    tags: ["Java", "Android Studio", "XML"],
-    github: "https://github.com/loxiwwxd/CeviriApp",
-    live: null,
-  },
-  {
     title: "Portfolyo Web Sitesi",
     description: "React ve Tailwind CSS ile geliştirilmiş, Framer Motion animasyonları içeren modern ve minimalist kişisel portfolyo sitesi.",
     tags: ["React", "Tailwind CSS", "Framer Motion", "Vite"],
