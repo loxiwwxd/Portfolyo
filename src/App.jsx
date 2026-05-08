@@ -23,15 +23,17 @@ export default function App() {
       }} />
       <div className="relative">
         <Navbar />
-        <Hero />
-        <SectionDivider />
-        <About />
-        <SectionDivider />
-        <Skills />
-        <SectionDivider />
-        <Projects />
-        <SectionDivider />
-        <Contact />
+        <main>
+          <Hero />
+          <SectionDivider />
+          <About />
+          <SectionDivider />
+          <Skills />
+          <SectionDivider />
+          <Projects />
+          <SectionDivider />
+          <Contact />
+        </main>
         <Footer />
       </div>
     </div>
