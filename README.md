@@ -1,6 +1,8 @@
-#  Portfolyo Web Sitesi
+#  loxiw — Portfolyo Web Sitesi
 
-Modern, minimalist ve yüksek performanslı kişisel portfolyo sitesi.
+> 🌐 **Canlı Site:** [loxiw.netlify.app](https://loxiw.netlify.app)
+
+Modern, minimalist ve yüksek performanslı kişisel portfolyo sitesi. **loxiw** — Kerem Cerrahoğlu'nun Full Stack Developer portfolyosu.
 
 ## Teknolojiler
 
